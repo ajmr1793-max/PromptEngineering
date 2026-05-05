@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha 03 | Ambigüedad, contexto y significado</title>
+  <style>
+    :root {
+      --paper: #f7f7f5;
+      --ink: #2f3033;
+      --muted: #6f7378;
+      --line: #b9bcc0;
+      --soft-line: #dedfdf;
+      --accent: #42464a;
+      --bg: #d8d8d6;
+      --card-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #eeeeec 0, var(--bg) 48%, #c9c9c7 100%);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.48;
+    }
+
+    .page {
+      width: min(100%, 8.5in);
+      min-height: 11in;
+      margin: 32px auto;
+      padding: 0.52in 0.52in 0.45in;
+      background: var(--paper);
+      box-shadow: var(--card-shadow);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(31px, 5vw, 46px);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+      max-width: 560px;
+    }
+
+    .subtitle {
+      margin: 14px 0 0;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metadata {
+      justify-self: end;
+      width: min(100%, 310px);
+      display: grid;
+      gap: 7px;
+      font-size: 10.5px;
+      color: var(--muted);
+    }
+
+    .metadata div {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .metadata strong {
+      color: var(--ink);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .rule {
+      height: 1px;
+      background: var(--line);
+      position: relative;
+      margin: 20px 0 22px;
+    }
+
+    .rule::before {
+      content: "";
+      width: 42px;
+      height: 2px;
+      background: var(--ink);
+      position: absolute;
+      left: 0;
+      top: -1px;
+    }
+
+    section { break-inside: avoid; }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin: 16px 0 7px;
+      font-size: 11.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    p, li {
+      font-size: 10.8px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    ul, ol {
+      margin: 0 0 10px 17px;
+      padding: 0;
+    }
+
+    .summary {
+      font-size: 11.2px;
+      max-width: 100%;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      margin-bottom: 15px;
+      break-inside: avoid;
+    }
+
+    .date {
+      color: var(--ink);
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .entry-title {
+      margin: 0 0 3px;
+      color: var(--ink);
+      font-size: 11.2px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .entry-subtitle {
+      margin: 0 0 7px;
+      color: var(--accent);
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .compact-list li { margin-bottom: 5px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      border: 1px solid var(--soft-line);
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 9.8px;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .mini-table th {
+      text-align: left;
+      color: var(--ink);
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--line);
+      padding: 6px 5px;
+    }
+
+    .mini-table td {
+      border-bottom: 1px solid var(--soft-line);
+      padding: 6px 5px;
+      vertical-align: top;
+    }
+
+    .quote-box {
+      border-left: 3px solid var(--accent);
+      padding: 8px 0 8px 13px;
+      margin: 8px 0 12px;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .framework {
+      margin: 8px 0 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--soft-line);
+      background: rgba(255, 255, 255, 0.38);
+      font-size: 10px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .strength-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .mini-card {
+      border-top: 1px solid var(--line);
+      padding-top: 9px;
+      break-inside: avoid;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 10.4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer {
+      margin-top: 22px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 9.5px;
+    }
+
+    @media (max-width: 760px) {
+      body { background: var(--paper); }
+      .page {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 28px 22px;
+        box-shadow: none;
+      }
+      .topbar, .columns, .strength-grid {
+        grid-template-columns: 1fr;
+      }
+      .metadata { justify-self: start; }
+      .entry {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .footer { flex-direction: column; }
+    }
+
+    @page {
+      size: Letter;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page {
+        width: 8.5in;
+        min-height: 11in;
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div>
+        <p class="kicker">Ficha 03 · Nodo A1</p>
+        <h1>Ambigüedad, contexto y significado</h1>
+        <p class="subtitle">En el lenguaje humano</p>
+      </div>
+      <aside class="metadata" aria-label="Metadatos de la ficha">
+        <div><span>🏷️</span><span><strong>Nivel</strong><br />Introductorio</span></div>
+        <div><span>📚</span><span><strong>Lección</strong><br />L03</span></div>
+        <div><span>🗓️</span><span><strong>Revisión</strong><br />2026-05-02</span></div>
+        <div><span>🔗</span><span><strong>Conecta</strong><br />L01 · L02 · Word Sense Disambiguation · Coreference Resolution</span></div>
+      </aside>
+    </header>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Resumen ejecutivo</h2>
+      <p class="summary">La ambigüedad no es un defecto del lenguaje natural: es una característica estructural que los humanos resolvemos automáticamente usando contexto, conocimiento del mundo y modelos mentales del interlocutor. Para las máquinas, la ambigüedad es uno de los obstáculos más persistentes del NLP, porque resolverla requiere conocimiento implícito y razonamiento contextual. Esta lección cierra el nodo A1 con un reto profundo: el significado no está solo en las palabras, sino en la relación entre palabras, contexto y agentes que se comunican.</p>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Objetivos de aprendizaje</h2>
+      <div class="entry">
+        <div class="date">Objetivo 01</div>
+        <div>
+          <p class="entry-title">Tipos de ambigüedad</p>
+          <p>Distinguir los tipos principales de ambigüedad lingüística: léxica, sintáctica, semántica y pragmática.</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="date">Objetivo 02</div>
+        <div>
+          <p class="entry-title">Rol del contexto</p>
+          <p>Explicar cómo el contexto resuelve la ambigüedad y qué tipos de contexto existen.</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="date">Objetivo 03</div>
+        <div>
+          <p class="entry-title">Dificultad computacional</p>
+          <p>Identificar por qué la resolución de ambigüedad es difícil para los sistemas computacionales.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Concepto central</h2>
+      <div class="columns">
+        <div>
+          <h3>Definición formal</h3>
+          <p>La ambigüedad lingüística ocurre cuando una expresión puede recibir más de una interpretación. Puede surgir en el nivel léxico, sintáctico, semántico o pragmático.</p>
+          <div class="pill-row">
+            <span class="pill">Léxica</span>
+            <span class="pill">Sintáctica</span>
+            <span class="pill">Semántica</span>
+            <span class="pill">Pragmática</span>
+          </div>
+        </div>
+        <div>
+          <h3>Explicación intuitiva</h3>
+          <p>Cuando lees “vi al hombre con el telescopio”, tu cerebro decide si tú usaste el telescopio o si el hombre lo cargaba. Lo hace casi sin ruido mental, usando contexto previo, probabilidades lingüísticas y conocimiento del mundo. Para una máquina, ese acto microscópico es una montaña rusa de representación y razonamiento.</p>
+        </div>
+      </div>
+
+      <h3>Principios fundamentales</h3>
+      <ul class="compact-list">
+        <li><strong>La ambigüedad es omnipresente y funcional:</strong> los hablantes la usan en ironía, humor, diplomacia y comunicación cotidiana.</li>
+        <li><strong>El contexto tiene múltiples capas:</strong> incluye palabras previas, situación, relación entre interlocutores, intenciones y cultura compartida.</li>
+        <li><strong>El significado es co-construido:</strong> emerge de la interacción entre hablante, oyente, contexto y conocimiento compartido.</li>
+      </ul>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Mapa de conexiones</h2>
+      <div class="columns">
+        <div>
+          <h3>Depende de</h3>
+          <ul>
+            <li>L01 — Qué es el lenguaje natural</li>
+            <li>L02 — Lenguaje formal vs natural</li>
+            <li>Nodo A1 — El lenguaje como sistema complejo</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Conecta y desbloquea</h3>
+          <ul>
+            <li>Word Sense Disambiguation (WSD), Coreference Resolution y Pragmática computacional.</li>
+            <li>Sentiment Analysis, Intent Detection, Named Entity Recognition y Machine Translation.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Desglose técnico</h2>
+      <h3>Tipos de ambigüedad con ejemplos NLP</h3>
+      <table class="mini-table">
+        <thead>
+          <tr><th>Tipo</th><th>Ejemplo</th><th>Interpretaciones</th><th>Técnica asociada</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Léxica</td><td>“banco”</td><td>Institución financiera / asiento / margen de río</td><td>Word Sense Disambiguation</td></tr>
+          <tr><td>Sintáctica</td><td>“Vi al hombre con el telescopio”</td><td>Yo usé el telescopio / el hombre tenía el telescopio</td><td>Parsing probabilístico</td></tr>
+          <tr><td>Semántica</td><td>“Todos los estudiantes leen un libro”</td><td>Un libro específico / cada estudiante su propio libro</td><td>Semantic Role Labeling</td></tr>
+          <tr><td>Referencial</td><td>“Juan le dijo a Pedro que él ganó”</td><td>¿Ganó Juan o Pedro?</td><td>Coreference Resolution</td></tr>
+          <tr><td>Pragmática</td><td>“¿Puedes abrir la ventana?”</td><td>Pregunta de capacidad / petición de acción</td><td>Intent Detection</td></tr>
+        </tbody>
+      </table>
+
+      <div class="columns">
+        <div>
+          <h3>Tipos de contexto</h3>
+          <ul>
+            <li><strong>Lingüístico:</strong> palabras y oraciones que rodean la expresión.</li>
+            <li><strong>Situacional:</strong> quién habla, a quién, dónde, cuándo y por qué canal.</li>
+            <li><strong>Cultural:</strong> convenciones, normas y conocimiento compartido.</li>
+            <li><strong>Enciclopédico:</strong> conocimiento general del mundo que los hablantes dan por supuesto.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Principio de Grice</h3>
+          <div class="framework">Los hablantes asumen cooperación mutua. Máximas: cantidad, calidad, relevancia y modo. Las implicaturas aparecen cuando una máxima se viola aparentemente.</div>
+          <p>Ejemplo: “¿Sabes qué hora es?” normalmente implica “dime la hora”, no una evaluación de capacidad.</p>
+        </div>
+      </div>
+
+      <h3>Pipeline de resolución</h3>
+      <div class="framework">Expresión ambigua → Identificar nivel de ambigüedad → Activar fuentes de contexto relevantes → Calcular interpretación más probable → Confirmar con contexto adicional si hay incertidumbre</div>
+
+      <h3>Estrategias de resolución</h3>
+      <table class="mini-table">
+        <thead>
+          <tr><th>Estrategia</th><th>Cuándo usar</th><th>Ventaja</th><th>Limitación</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Reglas léxicas</td><td>Ambigüedad léxica en dominio cerrado</td><td>Precisión en dominio</td><td>No escala</td></tr>
+          <tr><td>Modelos estadísticos</td><td>Grandes corpus y tareas generales</td><td>Escala bien</td><td>Necesita muchos datos</td></tr>
+          <tr><td>Embeddings contextuales</td><td>Desambiguación dependiente del contexto</td><td>Potentes en WSD</td><td>Opacos y costosos</td></tr>
+          <tr><td>Preguntar al usuario</td><td>Alta ambigüedad y alto costo de error</td><td>Mayor certeza</td><td>Añade fricción</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Aplicación práctica</h2>
+      <div class="columns">
+        <div>
+          <h3>Proceso paso a paso</h3>
+          <ol>
+            <li>Detectar si la ambigüedad es relevante para la tarea.</li>
+            <li>Identificar el tipo de ambigüedad dominante en el dominio.</li>
+            <li>Seleccionar fuentes de contexto disponibles: historial, perfil, metadatos o situación.</li>
+            <li>Aplicar la estrategia adecuada: diccionario, modelo o pregunta de aclaración.</li>
+            <li>Monitorear fallos y analizar ejemplos de resolución incorrecta.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Ejemplo concreto</h3>
+          <div class="quote-box">Input de soporte técnico: “No funciona.”</div>
+          <p>La ambigüedad referencial es enorme: ¿qué no funciona?, ¿desde cuándo?, ¿qué esperaba el usuario? Con historial de sesión, el sistema puede resolver que “no funciona” se refiere al software o proceso mencionado antes. Sin historial, conviene preguntar con opciones específicas.</p>
+        </div>
+      </div>
+
+      <h3>Errores comunes</h3>
+      <ul>
+        <li>No asumir siempre la interpretación más frecuente: monitorear casos donde la interpretación por defecto falla.</li>
+        <li>No pedir aclaración para toda ambigüedad: reservarla para escenarios de alto costo de error.</li>
+        <li>No resolver solo con contexto lingüístico: incorporar contexto situacional y enciclopédico cuando exista.</li>
+      </ul>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Fortalezas y limitaciones</h2>
+      <div class="strength-grid">
+        <div class="mini-card"><strong>Fortaleza</strong><p>Entender la ambigüedad permite diseñar sistemas más robustos y estrategias de fallback más inteligentes.</p></div>
+        <div class="mini-card"><strong>Limitación</strong><p>La ambigüedad pragmática, como ironía e implicatura, sigue siendo difícil para sistemas automáticos.</p></div>
+        <div class="mini-card"><strong>Alternativa</strong><p>Cuando el costo de error es alto, conviene reducir ambigüedad con opciones predefinidas, formularios o interfaces guiadas.</p></div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Zona de práctica</h2>
+      <div class="columns">
+        <div>
+          <h3>Ejercicio</h3>
+          <p>Analiza estas oraciones e identifica: tipo de ambigüedad, información contextual necesaria y qué haría un sistema NLP sin ese contexto.</p>
+          <ul>
+            <li>“El estudiante vio al profesor con los binoculares.”</li>
+            <li>“¿Me ayudas?”</li>
+            <li>“Necesito más luz.”</li>
+            <li>“Ana le contó a María que su jefe llegó tarde.”</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Mini-proyecto</h3>
+          <p>Recopila 20 mensajes de soporte, redes sociales o chat. Clasifica cada mensaje según el tipo de ambigüedad dominante y define qué contexto adicional resolvería la interpretación.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Recursos recomendados</h2>
+      <div class="columns">
+        <div>
+          <h3>Lecturas y cursos</h3>
+          <ul>
+            <li>Grice, H.P. — “Logic and Conversation”.</li>
+            <li>Jurafsky & Martin — Speech and Language Processing, capítulos sobre WSD y coreference resolution.</li>
+            <li>Stanford CS224U — Módulos sobre pragmática y significado.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Papers e investigación</h3>
+          <ul>
+            <li>Navigli, R. — “Word Sense Disambiguation: A Survey”.</li>
+            <li>Levesque et al. — “The Winograd Schema Challenge”.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Tags: #NLP · #introductorio · #ambigüedad · #contexto</span>
+      <span>Estado: Pendiente</span>
+    </footer>
+  </main>
+</body>
+</html>
