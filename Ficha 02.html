@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha 02 | Lenguaje formal vs natural</title>
+  <style>
+    :root {
+      --paper: #f7f7f5;
+      --ink: #2f3033;
+      --muted: #6f7378;
+      --line: #b9bcc0;
+      --soft-line: #dedfdf;
+      --accent: #42464a;
+      --bg: #d8d8d6;
+      --card-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #eeeeec 0, var(--bg) 48%, #c9c9c7 100%);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.48;
+    }
+
+    .page {
+      width: min(100%, 8.5in);
+      min-height: 11in;
+      margin: 32px auto;
+      padding: 0.52in 0.52in 0.45in;
+      background: var(--paper);
+      box-shadow: var(--card-shadow);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(31px, 5vw, 46px);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+      max-width: 560px;
+    }
+
+    .subtitle {
+      margin: 14px 0 0;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metadata {
+      justify-self: end;
+      width: min(100%, 310px);
+      display: grid;
+      gap: 7px;
+      font-size: 10.5px;
+      color: var(--muted);
+    }
+
+    .metadata div {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .metadata strong {
+      color: var(--ink);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .rule {
+      height: 1px;
+      background: var(--line);
+      position: relative;
+      margin: 20px 0 22px;
+    }
+
+    .rule::before {
+      content: "";
+      width: 42px;
+      height: 2px;
+      background: var(--ink);
+      position: absolute;
+      left: 0;
+      top: -1px;
+    }
+
+    section { break-inside: avoid; }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin: 16px 0 7px;
+      font-size: 11.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    p, li {
+      font-size: 10.8px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    code {
+      font-family: "Courier New", monospace;
+      font-size: 10px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.55);
+      padding: 1px 4px;
+      border: 1px solid var(--soft-line);
+      border-radius: 3px;
+    }
+
+    ul, ol {
+      margin: 0 0 10px 17px;
+      padding: 0;
+    }
+
+    .summary {
+      font-size: 11.2px;
+      max-width: 100%;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      margin-bottom: 15px;
+      break-inside: avoid;
+    }
+
+    .date {
+      color: var(--ink);
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .entry-title {
+      margin: 0 0 3px;
+      color: var(--ink);
+      font-size: 11.2px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .entry-subtitle {
+      margin: 0 0 7px;
+      color: var(--accent);
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .compact-list li { margin-bottom: 5px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      border: 1px solid var(--soft-line);
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 9.8px;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .mini-table th {
+      text-align: left;
+      color: var(--ink);
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--line);
+      padding: 6px 5px;
+    }
+
+    .mini-table td {
+      border-bottom: 1px solid var(--soft-line);
+      padding: 6px 5px;
+      vertical-align: top;
+    }
+
+    .quote-box {
+      border-left: 3px solid var(--accent);
+      padding: 8px 0 8px 13px;
+      margin: 8px 0 12px;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .framework {
+      margin: 8px 0 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--soft-line);
+      background: rgba(255, 255, 255, 0.38);
+      font-size: 10px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+      white-space: pre-line;
+    }
+
+    .strength-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .mini-card {
+      border-top: 1px solid var(--line);
+      padding-top: 9px;
+      break-inside: avoid;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 10.4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer {
+      margin-top: 22px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 9.5px;
+    }
+
+    @media (max-width: 760px) {
+      body { background: var(--paper); }
+      .page {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 28px 22px;
+        box-shadow: none;
+      }
+      .topbar, .columns, .strength-grid {
+        grid-template-columns: 1fr;
+      }
+      .metadata { justify-self: start; }
+      .entry {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .footer { flex-direction: column; }
+    }
+
+    @page {
+      size: Letter;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page {
+        width: 8.5in;
+        min-height: 11in;
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div>
+        <p class="kicker">Ficha 02 · Nodo A1</p>
+        <h1>Diferencia entre lenguaje formal y natural</h1>
+        <p class="subtitle">Fronteras, reglas y ambigüedad en NLP</p>
+      </div>
+      <aside class="metadata" aria-label="Metadatos de la ficha">
+        <div><span>🏷️</span><span><strong>Nivel</strong><br />Introductorio</span></div>
+        <div><span>📚</span><span><strong>Lección</strong><br />L02</span></div>
+        <div><span>🗓️</span><span><strong>Revisión</strong><br />2026-05-02</span></div>
+        <div><span>🔗</span><span><strong>Conecta</strong><br />Qué es el lenguaje natural · Ambigüedad y contexto</span></div>
+      </aside>
+    </header>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Resumen ejecutivo</h2>
+      <p class="summary">Un lenguaje formal es un sistema simbólico definido explícitamente: tiene alfabeto finito, reglas de formación precisas y semántica no ambigua. El lenguaje natural, en cambio, es abierto, evolutivo y cargado de ambigüedad. Esta distinción explica por qué compiladores y parsers funcionan tan bien con código, pero no pueden trasladarse sin más al texto humano.</p>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Objetivos de aprendizaje</h2>
+      <div class="entry">
+        <div class="date">Objetivo 01</div>
+        <div>
+          <p class="entry-title">Definir lenguaje formal</p>
+          <p>Reconocer sus propiedades matemáticas clave: símbolos, reglas explícitas, gramática y verificabilidad.</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="date">Objetivo 02</div>
+        <div>
+          <p class="entry-title">Contrastar dimensiones</p>
+          <p>Comparar lenguaje formal y natural en origen, ambigüedad, evolución, verificabilidad, vocabulario, error y contexto.</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="date">Objetivo 03</div>
+        <div>
+          <p class="entry-title">Formalización parcial</p>
+          <p>Identificar cuándo un lenguaje natural puede restringirse mediante CNL, DSL o interfaces híbridas.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Concepto central</h2>
+      <div class="columns">
+        <div>
+          <h3>Definición formal</h3>
+          <p>Un lenguaje formal es un conjunto de cadenas de símbolos definido por una gramática formal: reglas finitas de producción que determinan exactamente qué expresiones son válidas. Su semántica es composicional y determinista.</p>
+          <div class="pill-row">
+            <span class="pill">Explícito</span>
+            <span class="pill">Verificable</span>
+            <span class="pill">Determinista</span>
+            <span class="pill">Cerrado</span>
+          </div>
+        </div>
+        <div>
+          <h3>Explicación intuitiva</h3>
+          <p>Un lenguaje formal funciona como ajedrez: reglas finitas, movimientos válidos o inválidos. El lenguaje natural funciona como conversación viva: reglas implícitas, negociación constante y excepciones que no destruyen la comunicación.</p>
+        </div>
+      </div>
+
+      <h3>Principios fundamentales</h3>
+      <ul class="compact-list">
+        <li><strong>Cierre bajo reglas:</strong> en lenguaje formal, cualquier expresión válida puede verificarse algorítmicamente.</li>
+        <li><strong>Composición estricta vs. sentido contextual:</strong> el lenguaje natural depende de pragmática, contexto y conocimiento del mundo.</li>
+        <li><strong>Evolución:</strong> los lenguajes formales cambian por diseño; los naturales cambian por uso social.</li>
+      </ul>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Desglose técnico</h2>
+      <h3>Jerarquía de Chomsky</h3>
+      <table class="mini-table">
+        <thead>
+          <tr><th>Tipo</th><th>Gramática</th><th>Autómata</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tipo 3</td><td>Regular</td><td>Autómata finito</td><td>Regex, tokens léxicos</td></tr>
+          <tr><td>Tipo 2</td><td>Libre de contexto</td><td>Autómata de pila</td><td>Lenguajes de programación</td></tr>
+          <tr><td>Tipo 1</td><td>Sensible al contexto</td><td>Autómata lineal acotado</td><td>Fenómenos lingüísticos naturales</td></tr>
+          <tr><td>Tipo 0</td><td>Sin restricción</td><td>Máquina de Turing</td><td>Aproximación al lenguaje natural completo</td></tr>
+        </tbody>
+      </table>
+      <p>El lenguaje natural no encaja limpiamente en un solo tipo: algunos fenómenos son regulares, otros sensibles al contexto y la pragmática escapa a toda formalización completa conocida.</p>
+
+      <h3>Propiedades diferenciales clave</h3>
+      <table class="mini-table">
+        <thead>
+          <tr><th>Dimensión</th><th>Lenguaje formal</th><th>Lenguaje natural</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Origen</td><td>Diseñado deliberadamente</td><td>Emergido socialmente</td></tr>
+          <tr><td>Ambigüedad</td><td>Ausente por definición</td><td>Omnipresente y funcional</td></tr>
+          <tr><td>Evolución</td><td>Controlada y versionada</td><td>Espontánea e imparable</td></tr>
+          <tr><td>Verificabilidad</td><td>Algorítmica</td><td>Gradiente y contextual</td></tr>
+          <tr><td>Vocabulario</td><td>Finito y cerrado</td><td>Abierto y expansivo</td></tr>
+          <tr><td>Tolerancia al error</td><td>Nula</td><td>Alta</td></tr>
+          <tr><td>Contexto</td><td>Mínimo o nulo</td><td>Radical</td></tr>
+        </tbody>
+      </table>
+
+      <div class="columns">
+        <div>
+          <h3>Gramática formal BNF</h3>
+          <div class="framework">&lt;oración&gt; ::= &lt;sujeto&gt; &lt;predicado&gt;
+&lt;sujeto&gt; ::= &lt;artículo&gt; &lt;sustantivo&gt;
+&lt;predicado&gt; ::= &lt;verbo&gt; | &lt;verbo&gt; &lt;objeto&gt;</div>
+          <p>Esta gramática genera exactamente las oraciones válidas según sus reglas: nada más, nada menos.</p>
+        </div>
+        <div>
+          <h3>Variantes intermedias</h3>
+          <ul>
+            <li><strong>CNL:</strong> documentación técnica o instrucciones médicas con ambigüedad reducida.</li>
+            <li><strong>DSL:</strong> consultas, configuración y dominios con vocabulario limitado.</li>
+            <li><strong>NL + estructura:</strong> interfaces conversacionales con intención acotada.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Aplicación práctica</h2>
+      <div class="columns">
+        <div>
+          <h3>Proceso paso a paso</h3>
+          <ol>
+            <li>Caracterizar el input: libre o restringido.</li>
+            <li>Evaluar el costo de la ambigüedad.</li>
+            <li>Elegir parser formal si el dominio es cerrado; NLP estadístico o neuronal si el input es libre.</li>
+            <li>Diseñar manejo de out-of-vocabulary y out-of-grammar.</li>
+            <li>Iterar con datos reales, no solo con reglas ideales.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Ejemplo concreto</h3>
+          <div class="quote-box"><code>SELECT * FROM productos WHERE precio &lt; 100</code><br />vs.<br />“Muéstrame productos baratos.”</div>
+          <p>SQL no deja duda; “barato” exige inferir umbral, intención, contexto y quizá pedir aclaración. Ahí la máquina entra al pantano elegante del lenguaje humano.</p>
+        </div>
+      </div>
+
+      <h3>Errores comunes</h3>
+      <ul>
+        <li>No usar parsers de lenguajes formales directamente sobre texto natural: el parsing natural es probabilístico.</li>
+        <li>No exigir lenguaje natural cuando un formulario o comando estructurado basta.</li>
+        <li>No asumir que un lenguaje controlado elimina toda ambigüedad: solo la reduce.</li>
+      </ul>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Fortalezas y limitaciones</h2>
+      <div class="strength-grid">
+        <div class="mini-card"><strong>Fortaleza</strong><p>La distinción formal/natural permite elegir herramientas: compiladores para reglas cerradas, NLP para entradas abiertas.</p></div>
+        <div class="mini-card"><strong>Limitación</strong><p>Los lenguajes formales son poco accesibles para usuarios no técnicos; el natural introduce ambigüedad irreducible.</p></div>
+        <div class="mini-card"><strong>Alternativa</strong><p>Lenguajes controlados e interfaces híbridas pueden confirmar interpretación antes de actuar.</p></div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Zona de práctica</h2>
+      <div class="columns">
+        <div>
+          <h3>Ejercicio</h3>
+          <p>Clasifica estas expresiones como lenguaje formal o natural: <code>if temperatura &gt; 100: activar_alarma()</code>, “Si hace mucho calor, enciende el aire”, <code>SELECT nombre FROM empleados WHERE departamento = 'ventas'</code> y “Dame los datos de los de ventas”.</p>
+        </div>
+        <div>
+          <h3>Mini-proyecto</h3>
+          <p>Diseña un lenguaje controlado mínimo para pedidos de restaurante o soporte técnico: vocabulario permitido, estructuras válidas y exclusiones. Pruébalo con 5 personas.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Recursos recomendados</h2>
+      <div class="columns">
+        <div>
+          <h3>Lecturas</h3>
+          <ul>
+            <li>Sipser — Introduction to the Theory of Computation, capítulos 1-2.</li>
+            <li>Jurafsky & Martin — Speech and Language Processing, apéndice sobre gramáticas formales.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Investigación</h3>
+          <ul>
+            <li>Chomsky — Three Models for the Description of Language.</li>
+            <li>Ranta — Grammatical Framework.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Tags: #NLP · #introductorio · #lenguaje-como-sistema-complejo</span>
+      <span>Estado: Pendiente</span>
+    </footer>
+  </main>
+</body>
+</html>
