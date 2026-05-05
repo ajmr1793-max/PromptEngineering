@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha 01 | Lenguaje natural</title>
+  <style>
+    :root {
+      --paper: #f7f7f5;
+      --ink: #2f3033;
+      --muted: #6f7378;
+      --line: #b9bcc0;
+      --soft-line: #dedfdf;
+      --accent: #42464a;
+      --bg: #d8d8d6;
+      --card-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #eeeeec 0, var(--bg) 48%, #c9c9c7 100%);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.48;
+    }
+
+    .page {
+      width: min(100%, 8.5in);
+      min-height: 11in;
+      margin: 32px auto;
+      padding: 0.52in 0.52in 0.45in;
+      background: var(--paper);
+      box-shadow: var(--card-shadow);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(31px, 5vw, 46px);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+      max-width: 560px;
+    }
+
+    .subtitle {
+      margin: 14px 0 0;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metadata {
+      justify-self: end;
+      width: min(100%, 310px);
+      display: grid;
+      gap: 7px;
+      font-size: 10.5px;
+      color: var(--muted);
+    }
+
+    .metadata div {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .metadata strong {
+      color: var(--ink);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .rule {
+      height: 1px;
+      background: var(--line);
+      position: relative;
+      margin: 20px 0 22px;
+    }
+
+    .rule::before {
+      content: "";
+      width: 42px;
+      height: 2px;
+      background: var(--ink);
+      position: absolute;
+      left: 0;
+      top: -1px;
+    }
+
+    section { break-inside: avoid; }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin: 16px 0 7px;
+      font-size: 11.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    p, li {
+      font-size: 10.8px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    ul, ol {
+      margin: 0 0 10px 17px;
+      padding: 0;
+    }
+
+    .summary {
+      font-size: 11.2px;
+      max-width: 100%;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      margin-bottom: 15px;
+      break-inside: avoid;
+    }
+
+    .date {
+      color: var(--ink);
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .entry-title {
+      margin: 0 0 3px;
+      color: var(--ink);
+      font-size: 11.2px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .entry-subtitle {
+      margin: 0 0 7px;
+      color: var(--accent);
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .compact-list li { margin-bottom: 5px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      border: 1px solid var(--soft-line);
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 9.8px;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .mini-table th {
+      text-align: left;
+      color: var(--ink);
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--line);
+      padding: 6px 5px;
+    }
+
+    .mini-table td {
+      border-bottom: 1px solid var(--soft-line);
+      padding: 6px 5px;
+      vertical-align: top;
+    }
+
+    .quote-box {
+      border-left: 3px solid var(--accent);
+      padding: 8px 0 8px 13px;
+      margin: 8px 0 12px;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .framework {
+      margin: 8px 0 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--soft-line);
+      background: rgba(255, 255, 255, 0.38);
+      font-size: 10px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .strength-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .mini-card {
+      border-top: 1px solid var(--line);
+      padding-top: 9px;
+      break-inside: avoid;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 10.4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer {
+      margin-top: 22px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 9.5px;
+    }
+
+    @media (max-width: 760px) {
+      body { background: var(--paper); }
+      .page {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 28px 22px;
+        box-shadow: none;
+      }
+      .topbar, .columns, .strength-grid {
+        grid-template-columns: 1fr;
+      }
+      .metadata { justify-self: start; }
+      .entry {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .footer { flex-direction: column; }
+    }
+
+    @page {
+      size: Letter;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page {
+        width: 8.5in;
+        min-height: 11in;
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div>
+        <p class="kicker">Ficha 01 · Nodo A1</p>
+        <h1>Qué es el lenguaje natural</h1>
+        <p class="subtitle">Y por qué es complejo para las máquinas</p>
+      </div>
+      <aside class="metadata" aria-label="Metadatos de la ficha">
+        <div><span>🏷️</span><span><strong>Nivel</strong><br />Introductorio</span></div>
+        <div><span>📚</span><span><strong>Lección</strong><br />L01</span></div>
+        <div><span>🗓️</span><span><strong>Revisión</strong><br />2026-05-02</span></div>
+        <div><span>🔗</span><span><strong>Conecta</strong><br />Lenguaje formal vs natural · Ambigüedad y contexto</span></div>
+      </aside>
+    </header>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Resumen ejecutivo</h2>
+      <p class="summary">El lenguaje natural es el sistema de comunicación que los humanos desarrollan espontáneamente mediante experiencia social. A diferencia de los lenguajes formales, no fue diseñado: emergió. Sus reglas son implícitas, sus significados dependen del contexto y sus usuarios lo alteran constantemente con resultados comprensibles. Por eso, el Procesamiento del Lenguaje Natural es uno de los desafíos más densos de la inteligencia artificial.</p>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Objetivos de aprendizaje</h2>
+      <div class="entry">
+        <div class="date">Objetivo 01</div>
+        <div>
+          <p class="entry-title">Definición y distinción</p>
+          <p>Definir qué es el lenguaje natural y distinguirlo de otros sistemas simbólicos.</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="date">Objetivo 02</div>
+        <div>
+          <p class="entry-title">Complejidad computacional</p>
+          <p>Identificar al menos cuatro fuentes de complejidad del lenguaje natural para las máquinas.</p>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="date">Objetivo 03</div>
+        <div>
+          <p class="entry-title">Límites de las reglas</p>
+          <p>Explicar por qué las gramáticas explícitas no bastan para procesar lenguaje humano.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Concepto central</h2>
+      <div class="columns">
+        <div>
+          <h3>Definición formal</h3>
+          <p>El lenguaje natural es cualquier lengua surgida de forma no planificada como producto de la cognición y la interacción social humana, por ejemplo español, swahili o mandarín.</p>
+          <div class="pill-row">
+            <span class="pill">Productivo</span>
+            <span class="pill">Arbitrario</span>
+            <span class="pill">Contextual</span>
+            <span class="pill">Evolutivo</span>
+          </div>
+        </div>
+        <div>
+          <h3>Explicación intuitiva</h3>
+          <p>Entender lenguaje no es seguir una receta: es inferir intención, situación, ironía, cultura y memoria compartida. Una máquina puede leer el texto; comprenderlo exige saber qué mundo lo rodea.</p>
+        </div>
+      </div>
+
+      <h3>Principios fundamentales</h3>
+      <ul class="compact-list">
+        <li><strong>Emergencia no diseñada:</strong> las reglas describen comportamientos de hablantes, no una especificación técnica previa.</li>
+        <li><strong>Dependencia contextual radical:</strong> el mismo texto puede cambiar de significado según persona, lugar, momento e intención.</li>
+        <li><strong>Violación productiva de reglas:</strong> los hablantes rompen normas y aun así comunican con éxito.</li>
+      </ul>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Desglose técnico</h2>
+      <h3>Niveles de análisis lingüístico</h3>
+      <table class="mini-table">
+        <thead>
+          <tr><th>Nivel</th><th>Qué estudia</th><th>Reto para NLP</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Fonológico</td><td>Sonidos</td><td>Reconocimiento de voz con acentos</td></tr>
+          <tr><td>Morfológico</td><td>Estructura de palabras</td><td>correr → corro / corrí / correría</td></tr>
+          <tr><td>Sintáctico</td><td>Estructura de oraciones</td><td>Ambigüedad de frases prepositivas</td></tr>
+          <tr><td>Semántico</td><td>Significado</td><td>Polisemia: banco</td></tr>
+          <tr><td>Pragmático</td><td>Uso en contexto</td><td>Ironía, implicaturas, actos de habla</td></tr>
+        </tbody>
+      </table>
+
+      <div class="columns">
+        <div>
+          <h3>Fuentes de complejidad</h3>
+          <ul>
+            <li>Variabilidad superficial: una idea puede expresarse de muchas formas.</li>
+            <li>Conocimiento implícito: entender exige saber cosas que no están escritas.</li>
+            <li>Dependencia larga: una palabra puede depender de información muy anterior.</li>
+            <li>Multimodalidad: tono, gesto y cultura alteran el mensaje.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Pipeline clásico de NLP</h3>
+          <div class="framework">Texto crudo → Tokenización → Análisis morfológico → Parsing sintáctico → Análisis semántico → Resolución pragmática → Output</div>
+          <p>Cada etapa introduce posibles errores que pueden propagarse hacia adelante.</p>
+        </div>
+      </div>
+
+      <h3>Enfoques principales</h3>
+      <table class="mini-table">
+        <thead>
+          <tr><th>Tipo</th><th>Ventaja</th><th>Limitación</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Reglas</td><td>Alta precisión en dominios cerrados</td><td>Frágil ante variación</td></tr>
+          <tr><td>Estadístico</td><td>Robusto ante variación superficial</td><td>Requiere corpus grandes</td></tr>
+          <tr><td>Neuronal / LLMs</td><td>Comprensión contextual potente</td><td>Opaco, costoso y propenso a alucinaciones</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Aplicación práctica</h2>
+      <div class="columns">
+        <div>
+          <h3>Proceso paso a paso</h3>
+          <ol>
+            <li>Identificar el nivel lingüístico del problema.</li>
+            <li>Evaluar cuánta variabilidad tendrá la entrada.</li>
+            <li>Seleccionar enfoque: reglas, estadístico o neuronal.</li>
+            <li>Diseñar manejo de casos edge y ruido lingüístico.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Ejemplo concreto</h3>
+          <div class="quote-box">“No me llega el pedido y ya pasó una semana, esto es una vergüenza.”</div>
+          <p>El sistema debe detectar entidad, evento, emoción negativa, urgencia y reclamo implícito. Sin pragmática, solo ve palabras; con contexto, ve intención.</p>
+        </div>
+      </div>
+
+      <h3>Errores comunes</h3>
+      <ul>
+        <li>No asumir reglas consistentes: diseñar tolerancia a variación y error.</li>
+        <li>No reducir NLP a palabras clave: modelar intención y contexto.</li>
+        <li>No evaluar solo datos limpios: incluir ruido, coloquialismos y errores tipográficos.</li>
+      </ul>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Fortalezas y limitaciones</h2>
+      <div class="strength-grid">
+        <div class="mini-card"><strong>Fortaleza</strong><p>Dominar lenguaje natural abre acceso a información humana no estructurada.</p></div>
+        <div class="mini-card"><strong>Limitación</strong><p>Los enfoques formales fallan ante sarcasmo, razonamiento profundo y contexto cultural.</p></div>
+        <div class="mini-card"><strong>Alternativa</strong><p>Dominios cerrados pueden usar lenguajes controlados, formularios u ontologías.</p></div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Zona de práctica</h2>
+      <div class="columns">
+        <div>
+          <h3>Ejercicio</h3>
+          <p>Analiza la oración “Claro, como siempre llegas puntual.” ¿Qué información necesita una máquina para inferir que probablemente es irónica?</p>
+        </div>
+        <div>
+          <h3>Mini-proyecto</h3>
+          <p>Recopila 10 mensajes de chat y clasifica cuál nivel lingüístico representa el mayor reto de comprensión automática.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <section>
+      <h2>Recursos recomendados</h2>
+      <div class="columns">
+        <div>
+          <h3>Lecturas</h3>
+          <ul>
+            <li>Jurafsky & Martin — Speech and Language Processing, capítulos 1-2.</li>
+            <li>Pinker — The Language Instinct, capítulos 1-3.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Investigación</h3>
+          <ul>
+            <li>Manning & Schütze — Foundations of Statistical NLP.</li>
+            <li>Bender et al. — On the Dangers of Stochastic Parrots.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Tags: #NLP · #introductorio · #lenguaje-como-sistema-complejo</span>
+      <span>Estado: Pendiente</span>
+    </footer>
+  </main>
+</body>
+</html>
